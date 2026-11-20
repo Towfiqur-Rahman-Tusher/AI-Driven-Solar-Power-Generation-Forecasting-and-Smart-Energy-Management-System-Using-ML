@@ -1,0 +1,29 @@
+{
+    "model_name": "XGBoost",
+    "model_type": "Shortwave Radiation Estimation",
+    "target": "shortwave_radiation",
+    "target_unit": "W/m2",
+    "training_period": "2017-01-01 to 2024-12-31",
+    "validation_period": "2025-01-01 to 2025-12-31",
+    "testing_period": "2026-01-01 to 2026-08-14",
+    "training_records": 561024,
+    "validation_records": 70080,
+    "testing_records": 43392,
+    "feature_count": 27,
+    "best_iteration": 490,
+    "validation_metrics": {
+        "MAE": 19.016483306884766,
+        "RMSE": 41.673888859756204,
+        "R2": 0.9752830862998962
+    },
+    "test_metrics": {
+        "MAE": 23.843502,
+        "RMSE": 51.836212,
+        "R2": 0.963351
+    },
+    "daytime_test_metrics": {
+        "MAE": 43.072109,
+        "RMSE": 69.944464,
+        "R2": 0.931868
+    }
+}

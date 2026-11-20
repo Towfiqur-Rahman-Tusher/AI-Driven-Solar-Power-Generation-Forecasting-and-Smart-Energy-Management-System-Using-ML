@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar AI | Forecast Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { background:#f1f5f9; font-family:Arial,sans-serif; }
+        .sidebar { background:#102a43; min-height:100vh; color:white; }
+        .sidebar h3 { color:#facc15; }
+        .card { border:0; border-radius:14px; }
+        .metric { font-size:27px; font-weight:bold; color:#087f5b; }
+        .btn-success { background:#087f5b; border:0; }
+        .sidebar p { cursor:pointer; }
+        .sidebar p:hover { color:#facc15; }
+        .sidebar a { color:white; text-decoration:none; display:block; padding:8px 0; }
+        .sidebar a:hover { color:#facc15; }
+        #locationStatus { font-size:13px; }
+        .history-card { background:#fff; border-left:5px solid #087f5b; }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid">
+<div class="row">
+
+    <aside class="col-md-2 sidebar p-4">
+        <h3>☀ Solar AI</h3>
+        <hr>
+
+        <a href="index.html">🏠 Dashboard</a>
+        <a href="#forecastForm">☀ Solar Forecast</a>
+        <a href="#forecastForm">⚙ Installation</a>
+        <a href="#forecastTable">📊 Reports</a>
+
+        <hr>
+
+        <a href="historical.html">📈 Historical Weather Analytics</a>
+
+        <hr>
+        <small>Bangladesh Solar Energy</small>
+    </aside>
+
+    <main class="col-md-10 p-4">
+
+        <h2>Solar Forecast Dashboard</h2>
+        <p class="text-muted">Location-aware solar power prediction system</p>
+
+        <!-- HISTORICAL ANALYTICS SHORTCUT -->
+        <div class="card history-card p-3 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-9">
+                    <h5>📈 Historical Weather Analytics</h5>
+                    <p class="text-muted mb-0">
+                        Explore Bangladesh's historical weather data from 2017 to 2026,
+                        including temperature, solar radiation, humidity and location comparisons.
+                    </p>
+                </div>
+                <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                    <a href="historical.html" class="btn btn-success">
+                        Explore Analytics →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-4 mb-4">
+            <h5>Installation Configuration</h5>
+
+            <form id="forecastForm" class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Select Bangladesh City</label>
+                    <select id="city" class="form-select">
+                        <option value="22.3569,91.7832">Chattogram</option>
+                        <option value="23.8103,90.4125">Dhaka</option>
+                        <option value="24.8949,91.8687">Sylhet</option>
+                        <option value="21.4272,92.0058">Cox's Bazar</option>
+                        <option value="24.3636,88.6241">Rajshahi</option>
+                        <option value="22.8456,89.5403">Khulna</option>
+                        <option value="25.7439,89.2752">Rangpur</option>
+                        <option value="22.7010,90.3535">Barishal</option>
+                    </select>
+                </div>
+
+                <div class="col-md-8 d-flex align-items-end">
+                    <button type="button" class="btn btn-outline-primary" id="gpsButton">
+                        📍 Use My Current Location
+                    </button>
+                    <span id="locationStatus" class="ms-3 text-muted"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Latitude</label>
+                    <input id="latitude" class="form-control" type="number"
+                           step="any" value="22.3569" min="-90" max="90" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Longitude</label>
+                    <input id="longitude" class="form-control" type="number"
+                           step="any" value="91.7832" min="-180" max="180" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Panel Area (m²)</label>
+                    <input id="area" class="form-control" type="number"
+                           step="0.1" value="30" min="1" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Panel Efficiency</label>
+                    <input id="efficiency" class="form-control" type="number"
+                           step="0.01" value="0.20" min="0.01" max="1" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Panel Tilt (°)</label>
+                    <input id="tilt" class="form-control" type="number"
+                           step="1" value="23" min="0" max="90" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Panel Azimuth (°)</label>
+                    <select id="azimuth" class="form-select">
+                        <option value="0">North (0°)</option>
+                        <option value="90">East (90°)</option>
+                        <option value="180" selected>South (180°)</option>
+                        <option value="270">West (270°)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Inverter Capacity (kW)</label>
+                    <input id="inverter" class="form-control" type="number"
+                           step="0.1" value="5.1" min="0.1" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Forecast Duration</label>
+                    <select id="hours" class="form-select">
+                        <option value="24">Next 24 Hours</option>
+                        <option value="48" selected>Next 48 Hours</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-success px-4" type="submit" id="forecastButton">
+                        Generate Solar Forecast
+                    </button>
+                    <span id="status" class="ms-3"></span>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <small>Total Estimated Energy</small>
+                    <div class="metric" id="energy">-- kWh</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <small>Maximum AC Power</small>
+                    <div class="metric" id="power">-- kW</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <small>Forecast Duration</small>
+                    <div class="metric" id="duration">--</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CHART -->
+        <div class="card p-4 mb-4">
+            <h5>Solar Power Forecast</h5>
+            <canvas id="forecastChart"></canvas>
+        </div>
+
+        <!-- HOURLY TABLE -->
+        <div class="card p-4">
+            <h5>Hourly Forecast Details</h5>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Temperature °C</th>
+                            <th>POA W/m²</th>
+                            <th>DC kW</th>
+                            <th>AC kW</th>
+                            <th>Energy kWh</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="forecastTable">
+                        <tr>
+                            <td colspan="6">No forecast generated yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
